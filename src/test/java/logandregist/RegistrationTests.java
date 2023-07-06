@@ -34,7 +34,7 @@ public class RegistrationTests {
         WebElement emailInput = wd.findElement(By.xpath("//input[1]"));
         emailInput.click();
         emailInput.clear();
-        emailInput.sendKeys("abc" + i + "@def.com");
+        emailInput.sendKeys("oleg" + i + "@def.com");
 
         WebElement passInput = wd.findElement(By.xpath("//input[2]"));
         passInput.click();

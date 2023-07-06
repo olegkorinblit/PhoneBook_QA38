@@ -1,8 +1,12 @@
 package manager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import com.google.common.io.Files;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.File;
+import java.io.IOException;
 
 public class HelperBase {
     WebDriver wd;
@@ -33,5 +37,27 @@ public class HelperBase {
             return wd.findElements(locator).size() > 0;
 
         }
-
+    public boolean isAlertPresent(){
+        Alert alert = new WebDriverWait(wd, 10)
+                .until(ExpectedConditions.alertIsPresent());
+        if(alert == null) return false;
+        wd.switchTo().alert();
+//        System.out.println(alert.getText());
+        alert.accept();
+        return true;
+    }
+    public boolean isWrongFormatMessage(){
+        Alert alert = new WebDriverWait(wd, 10)
+                .until(ExpectedConditions.alertIsPresent());
+        return alert.getText().contains("Wrong email or password");
+    }
+    public  void  takeScreenshot(String link){
+        File tmp=((TakesScreenshot)wd).getScreenshotAs(OutputType.FILE);
+        File screenshot=new File(link);
+        try {
+            Files.copy(tmp, screenshot);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
 }
